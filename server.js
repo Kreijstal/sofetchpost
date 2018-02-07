@@ -8,4 +8,5 @@ module.exports = async function addCors(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const data = await fetch(params.url);
   data.body.pipe(res);
+  console.log('done');
 };
