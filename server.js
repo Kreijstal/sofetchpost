@@ -9,7 +9,8 @@ const readHistory = function readHistoryFunc(res) {
   fs.readFile(historyFilename, 'utf8', (err, history) => {
     if (err) send(res, 500);
     res.setHeader('Content-type', 'text/plain; charset=utf-8');
-    send(res, 200, history);
+    const lastFifty = history.split('\n').slice(-50).reverse().join('\n'); // TK make more efficient? (fs.stat, just read end of file)
+    send(res, 200, lastFifty);
   });
 }
 
