@@ -19,7 +19,7 @@ module.exports = async function soFetchProxy(req, res) {
   
   try {
     const data = await fetch(url);
-    fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`);
+    fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     res.setHeader('Access-Control-Allow-Origin', '*');
     data.body.pipe(res);
   } catch (err) {

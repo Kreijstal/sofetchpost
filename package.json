@@ -1,10 +1,7 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
-  "name": "my-glitch-app",
-  "version": "0.0.1",
-  "description": "What am I about?",
+  "name": "so-fetch",
+  "version": "1.0.0",
+  "description": "Relay a request, adding on a CORS header",
   "main": "server.js",
   "scripts": {
     "start": "micro"
@@ -14,15 +11,16 @@
     "node-fetch": "^2.0.0"
   },
   "engines": {
-    "node": "8.x"
+    "node": "9.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/welcome-project"
+    "url": "https://glitch.com/edit/#!/sofetch"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
-    "node",
-    "glitch",
-    "express"
+    "cors",
+    "tiny",
+    "😘",
+    "Gretchen, stop trying to make fetch happen. It's not going to happen."
   ]
 }
