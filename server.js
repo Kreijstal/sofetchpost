@@ -5,9 +5,11 @@ const fetch = require('node-fetch');
 module.exports = async function addCors(req, res) {
   const url = req.url.slice(1);
   console.log(url);
-  res.setHeader('Access-Control-Allow-Origin', '*');
   const data = await fetch(url);
-  console.log(data.headers.raw());
+  // data.headers.forEach((value, name) => {
+  //   console.log(value, name);
+  // });
+  res.setHeader('Access-Control-Allow-Origin', '*');
   data.body.pipe(res);
-  console.log('done');
+  console.log(req);
 };
