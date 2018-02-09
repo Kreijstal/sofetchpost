@@ -20,8 +20,7 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     const data = await fetch(url);
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    res.setHeader('Access-Control-Allow-Origin', 'https://beta.obervablehq.com');
-    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     data.body.pipe(res);
   } catch (err) {
     send(res, 404); // e.g. https://sofetch.glitch.me/favicon.ico or https://sofetch.glitch.me/https://sdjflskdjfklsdjflk.com
