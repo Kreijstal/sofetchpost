@@ -7,7 +7,7 @@
   "description": "What am I about?",
   "main": "server.js",
   "scripts": {
-    "start": "micro"
+    "start": "echo"
   },
   "dependencies": {
     "micro": "^9.1.0",
