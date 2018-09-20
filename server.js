@@ -24,6 +24,6 @@ module.exports = async function soFetchProxy(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     data.body.pipe(res);
   } catch (err) {
-    send(res, 404); // e.g. https://sofetch.glitch.me/favicon.ico or https://sofetch.glitch.me/https://sdjflskdjfklsdjflk.com
+    send(res, 404); // e.g. https://observable-cors.glitch.me/favicon.ico or https://observable-cors.glitch.me/https://api.observablehq.com/user
   }
 };
