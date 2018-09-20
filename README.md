@@ -2,6 +2,6 @@
 
 <img src="https://i.giphy.com/SUgOYsXqmexxe.gif" alt="Silent, looping one-second video of Gretchen Wieners from the film Mean Girls saying 'so fetch!'">
 
-Please read the corresponding [Observable notebook](https://beta.observablehq.com/@alecglassford/so-fetch) to learn more!
+Please read the original [so fetch! JS notebook](https://beta.observablehq.com/@alecglassford/so-fetch) to learn more!
 
-and see Fetch Observable notebo
+and see [Fetch Sandbox](https://beta.observablehq.com/@randomfractals/fetch) with links to specs and other fetch/CORS notebooks on [https://beta.observablehq.com](https://beta.observablehq.com)
