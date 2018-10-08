@@ -21,6 +21,8 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     const data = await fetch(url);
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
+    res.setHeader('access-control-allow-credentials', 'true');
+    res.setHeader('access-control-allow-headers', 'Authorization, Content-Type');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('content-type', 'application/json; charset=utf-8');
     data.body.pipe(res);
