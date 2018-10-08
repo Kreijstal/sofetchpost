@@ -22,6 +22,7 @@ module.exports = async function soFetchProxy(req, res) {
     const data = await fetch(url);
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('content-type', 'application/json; charset=utf-8');
     data.body.pipe(res);
   } catch (err) {
     send(res, 404); // e.g. https://observable-cors.glitch.me/favicon.ico or https://observable-cors.glitch.me/https://api.observablehq.com/user
