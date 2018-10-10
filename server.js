@@ -19,7 +19,7 @@ module.exports = async function soFetchProxy(req, res) {
   if (url.length === 0) return readHistory(res);
   
   try {
-    const data = await fetch(url);
+    const data = await fetch(url, {headers: {'origin': 'https://beta.observablehq.com'}});
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     res.setHeader('access-control-allow-credentials', 'true');
     res.setHeader('access-control-allow-headers', 'Authorization, Content-Type');
