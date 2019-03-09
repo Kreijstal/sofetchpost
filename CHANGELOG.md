@@ -1,9 +1,5 @@
 # 👛 sofetch's Changelog
 
-## 2.0.0 (2018-10-01)
-
-Remixed for observablehq notebooks usage.
-
 ## 1.1.1 (2018-03-20)
 Update dependencies
 

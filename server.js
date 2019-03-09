@@ -19,14 +19,11 @@ module.exports = async function soFetchProxy(req, res) {
   if (url.length === 0) return readHistory(res);
   
   try {
-    const data = await fetch(url, {headers: {'origin': 'https://beta.observablehq.com'}});
+    const data = await fetch(url);
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    res.setHeader('access-control-allow-credentials', 'true');
-    res.setHeader('access-control-allow-headers', 'Authorization, Content-Type');
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('content-type', 'application/json; charset=utf-8');
     data.body.pipe(res);
   } catch (err) {
-    send(res, 404); // e.g. https://observable-cors.glitch.me/favicon.ico or https://observable-cors.glitch.me/https://api.observablehq.com/user
+    send(res, 404); // e.g. https://sofetch.glitch.me/favicon.ico or https://sofetch.glitch.me/https://sdjflskdjfklsdjflk.com
   }
 };

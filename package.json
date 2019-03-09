@@ -1,6 +1,6 @@
 {
-  "name": "observable-cors",
-  "version": "2.0.0",
+  "name": "so-fetch",
+  "version": "1.1.1",
   "description": "Relay a request, adding on a CORS header",
   "main": "server.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "node": "9.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/observable-cors"
+    "url": "https://glitch.com/edit/#!/sofetch"
   },
   "license": "Apache-2.0",
   "keywords": [
