@@ -2,6 +2,11 @@
   "name": "so-fetch",
   "version": "1.1.1",
   "description": "Relay a request, adding on a CORS header",
+  "author": {
+    "name": "Alec Glassford",
+    "email": "glassford@cs.stanford.edu",
+    "url": "https://alecglassford.com"
+  },
   "main": "server.js",
   "scripts": {
     "start": "micro"
