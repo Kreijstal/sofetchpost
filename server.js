@@ -18,14 +18,16 @@ module.exports = async function soFetchProxy(req, res) {
   const url = req.url.slice(1);
   if (url.length === 0) return readHistory(res);
   console.log(req.url)
-  console.log(req.__proto__)
-  
+  //res.write(Object.getOwnPropertyNames(req.headers))
+  res.write(JSON.stringify(req.method))
+  //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
   try {
-    const data = await fetch(url);
+    const data = await fetch(url,{method:req.method,headers:req.headers});
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     res.setHeader('Access-Control-Allow-Origin', '*');
     data.body.pipe(res);
   } catch (err) {
     send(res, 404); // e.g. https://sofetch.glitch.me/favicon.ico or https://sofetch.glitch.me/https://sdjflskdjfklsdjflk.com
   }
+  //res.close()
 };
