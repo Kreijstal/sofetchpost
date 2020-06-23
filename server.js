@@ -13,20 +13,27 @@ const readHistory = function readHistoryFunc(res) {
     send(res, 200, lastFifty);
   });
 }
+var objectMap = (obj, fn) =>
+  Object.fromEntries(
+    Object.entries(obj).map(
+      ([k, v], i) => [k, fn(v, k, i)]
+    )
+  )
 
 module.exports = async function soFetchProxy(req, res) {
   const url = req.url.slice(1);
   if (url.length === 0) return readHistory(res);
   console.log(req.url)
-  //res.write(Object.getOwnPropertyNames(req.headers))
-  res.write(JSON.stringify(req.method))
+  console.log(Object.getOwnPropertyNames(req.headers))
+  //res.write(JSON.stringify(req.method))
   //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
   try {
-    const data = await fetch(url,{method:req.method,headers:req.headers});
+    const data = await fetch(url,{method:req.method,headers:req.headers,redirect:"follow",body:req.body});
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     res.setHeader('Access-Control-Allow-Origin', '*');
     data.body.pipe(res);
   } catch (err) {
+    console.log(err)
     send(res, 404); // e.g. https://sofetch.glitch.me/favicon.ico or https://sofetch.glitch.me/https://sdjflskdjfklsdjflk.com
   }
   //res.close()
