@@ -17,6 +17,8 @@ const readHistory = function readHistoryFunc(res) {
 module.exports = async function soFetchProxy(req, res) {
   const url = req.url.slice(1);
   if (url.length === 0) return readHistory(res);
+  console.log(req.url)
+  console.log(req.__proto__)
   
   try {
     const data = await fetch(url);
