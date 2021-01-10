@@ -40,10 +40,10 @@ module.exports = async function soFetchProxy(req, res) {
       c.end();
     });*/
     
-     c.get(uri(url).path(), function(err, stream) {
-      if (err){console.log(uri(url).path,"did you really just error on me?"); throw err};
+     c.get(decodeURI(uri(url).path()), function(err, stream) {
+      if (err){console.log(decodeURI(uri(url).path()),"did you really just error on me?"); throw err};
       stream.once('close', function() { c.end(); });
-      //stream.pipe(res);
+      stream.pipe(res);
     });
   });
   
