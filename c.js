@@ -1,5 +1,6 @@
   var Client = require('ftp');
- 
+ var uri = require('lil-uri')
+ var url=uri("ftp://asamblea.tech")
   var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
@@ -8,5 +9,5 @@
       c.end();
     });
   });
-  // connect to localhost:21 as anonymous
-  c.connect({host:"assamblea.tech"});
+  
+  c.connect(url.parts);

@@ -12,11 +12,13 @@
     "start": "micro"
   },
   "dependencies": {
+    "ftp": "^0.3.10",
+    "lil-uri": "^0.2.2",
     "micro": "^9.3.4",
     "node-fetch": "^2.6.1"
   },
   "engines": {
-    "node": "15.x"
+    "node": "10.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/sofetch"
