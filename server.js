@@ -30,6 +30,7 @@ module.exports = async function soFetchProxy(req, res) {
   //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
+    fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     if(uri(url).protocol()=="ftp"){
       var c = new ftp();
   c.on('ready', function() {
@@ -50,7 +51,7 @@ module.exports = async function soFetchProxy(req, res) {
     }
     else{
     const data = await fetch(url,{method:req.method,headers:filob(req.headers,["host","referer"]),redirect:"follow",body:req.body});
-    fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
+    
     data.body.pipe(res);
     }
     
