@@ -1,4 +1,4 @@
-  var Client = require('ftp');
+var Client = require('ftp');
  var uri = require('lil-uri')
  var url=uri("ftp://asamblea.tech")
  function streamToString (stream) {
