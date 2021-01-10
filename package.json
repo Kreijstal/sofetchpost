@@ -12,11 +12,11 @@
     "start": "micro"
   },
   "dependencies": {
-    "micro": "^9.1.4",
-    "node-fetch": "^2.1.1"
+    "micro": "^9.3.4",
+    "node-fetch": "^2.6.1"
   },
   "engines": {
-    "node": "10.x"
+    "node": "15.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/sofetch"
