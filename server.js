@@ -33,11 +33,11 @@ module.exports = async function soFetchProxy(req, res) {
     if(uri(url).protocol()=="ftp"){
       var c = new ftp();
   c.on('ready', function() {
-    c.list(function(err, list) {
+    /*c.list(function(err, list) {
       if (err) throw err;
       console.dir(list);
       c.end();
-    });
+    });*/
      c.get(uri(url).path, function(err, stream) {
       if (err) throw err;
       stream.once('close', function() { c.end(); });
