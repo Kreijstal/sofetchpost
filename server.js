@@ -35,7 +35,7 @@ module.exports = async function soFetchProxy(req, res) {
     if(pa.scheme=="ftp"){//CHANGE
       var c = new ftp();
   c.on('ready', function() {
-    var p=decodeURI(uri(url).path());
+    var p=decodeURIComponent(pa.path);
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
       if (err) throw err;
@@ -98,14 +98,15 @@ module.exports = async function soFetchProxy(req, res) {
     });
     }else{
      c.get(p, function(err, stream) {
-      if (err){console.log(decodeURI(uri(url).path()),"did you really just error on me?"); throw err};
+      if (err){console.log(decodeURIComponent(pa.path),"did you really just error on me?"); throw err};
       stream.once('close', function() { c.end(); });
       stream.pipe(res);
     });
     }
   });
-  
-  c.connect(uri(url).parts);
+  var pa=uriJs.parse(url)
+  //c.connect(uri(url).parts);
+  c.connect({...pa,"user":pa.userinfo?.split(':')[0],"password":pa.userinfo?.split(':')[1]})
       
     }
     else{
