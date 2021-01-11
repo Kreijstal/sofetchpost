@@ -87,7 +87,7 @@ return await new Promise((resolve,reject)=>{
   c.connect(uri(url).parts);
 })
 }
-getftpfile("ftp://ftp.fau.de/apache/README.html").then(console.log)
+getftpfile("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor,%20WiSe)/").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
