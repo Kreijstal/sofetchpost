@@ -1,6 +1,6 @@
 var ftp = require('ftp');
  var uri = require('lil-uri')
- var url=uri("ftp://asamblea.tech")
+ //var url=uri("ftp://asamblea.tech")
  function streamToString (stream) {
   const chunks = []
   return new Promise((resolve, reject) => {
@@ -9,19 +9,21 @@ var ftp = require('ftp');
     stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
   })
 }
-async function()
+async function getftpfile(url){
 var c = new ftp();
+var file;
   c.on('ready', function() {
     var p=decodeURI(uri(url).path());
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
       if (err) throw err;
-      console.dir(list);
+      //console.dir(list);
       function getlast(str){
         var parts=encodeURI(str).split("/")
         return parts.pop()||parts.pop()
       }
-      res.write(`<!DOCTYPE html>
+      c.end();
+      file=(`<!DOCTYPE html>
 <html>
 <head>
 	<title>Index of ${p}</title>
@@ -33,7 +35,7 @@ var c = new ftp();
 	<h1>Index of ${p}</h1>
 	<table>
 		<tr>
-			<th valign="top"><img alt="[ICO]" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/blank.gif"></th>
+			<th valign="top"><img alt="[ICO]" src="http://www.xray.mpe.mpg.de/icons/apache/blank.gif"></th>
 			<th>Name</th>
 			<th>Last modified</th>
 			<th>Size</th>
@@ -45,14 +47,14 @@ var c = new ftp();
 			</th>
 		</tr>
 		<tr>
-			<td valign="top"><img alt="[PARENTDIR]" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/back.gif"></td>
+			<td valign="top"><img alt="[PARENTDIR]" src="http://www.xray.mpe.mpg.de/icons/apache/back.gif"></td>
 			<td><a href="..">Parent Directory</a></td>
 			<td>&nbsp;</td>
 			<td align="right">-</td>
 			<td>&nbsp;</td>
 		</tr>`+
       list.map(a=>`		<tr>
-			<td valign="top"><img alt="${a.type=="d"?"[DIR]":"[TXT]"}" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/${a.type=="d"?"folder.gif":"text.gif"}"></td>
+			<td valign="top"><img alt="${a.type=="d"?"[DIR]":"[TXT]"}" src="http://www.xray.mpe.mpg.de/icons/apache/${a.type=="d"?"folder.gif":"text.gif"}"></td>
 			<td>
 				<a href="${getlast(a.name)+(a.type=="d"?"/":"")}">${a.name}</a>
 			</td>
@@ -66,25 +68,26 @@ var c = new ftp();
 		</tr>
 	</table>
 	<address>
-		Made with love thanks to glitch.com<!--yeah this was from apache, why do you ask?-->
+		Index made by hand :/<!--yeah this was from apache, why do you ask?-->
 	</address>
 </body>
 </html>`)
-      send(res,200)
-      c.end();
+      
+      
     });
     }else{
      c.get(p, function(err, stream) {
-      if (err){console.log(decodeURI(uri(url).path()),"did you really just error on me?"); throw err};
+      if (err){throw err};
       stream.once('close', function() { c.end(); });
-      stream.pipe(res);
+      return streamToString(stream)
     });
     }
   });
   
   c.connect(uri(url).parts);
-
-  var c = new Client();
+}
+getftpfile("ftp://asamblea.tech/")
+ /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
       if (err) throw err;
@@ -96,7 +99,7 @@ var c = new ftp();
       stream.once('close', function() { c.end(); });
       (async function(){console.log("hi");const result = await streamToString(stream);console.log(result)})()
       //stream.pipe();
-    });*/
+    });
   });
   
-  c.connect(url.parts);
+  c.connect(url.parts);*/
