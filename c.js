@@ -97,7 +97,7 @@ return await new Promise((resolve,reject)=>{
 getftpfile("ftp://asamblea.tech/ISIS/N%DC%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
   var c = new ftp();
   c.on('ready', function() {
-    c.list("/ISIS/N%DC Signale und Systeme (Bachelor, WiSe)",function(err, list) {
+    c.list("/ISIS/N\xDC Signale und Systeme (Bachelor, WiSe)/",function(err, list) {
       if (err) throw err;
       console.dir(list);
       c.end();
