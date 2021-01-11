@@ -88,7 +88,7 @@ return await new Promise((resolve,reject)=>{
   });
   console.log("before",url)
   var pa=uriJs.parse(url)
-  c.connect({host:pa.host,user:pa.userinfo.split(":")[0],password:pa.userinfo.split(":")[1],path:pa.path});
+  c.connect({...pa,"user":pa.userinfo?.split(':')[0],"password":pa.userinfo?.split(':')[1]});
   console.log("after")
 })
 }
