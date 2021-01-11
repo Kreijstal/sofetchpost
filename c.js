@@ -21,7 +21,7 @@ return await new Promise((resolve,reject)=>{
       if (err) throw err;
       //console.dir(list);
       function getlast(str){
-        var parts=encodeURI(str).split("/")
+        var parts=encodeURIComponent((str)).split("/")
         return parts.pop()||parts.pop()
       }
       c.end();
@@ -85,12 +85,13 @@ return await new Promise((resolve,reject)=>{
     });
     }
   });
-  console.log("before")
+  console.log("before",url)
   c.connect(uri(url).parts);
-  console.log("before")
+  console.log("after")
 })
 }
-getftpfile("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor,%20WiSe)/").then(console.log)
+uri("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/")
+getftpfile("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
