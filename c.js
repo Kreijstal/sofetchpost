@@ -13,10 +13,11 @@ var uriJs = require("uri-js")
 async function getftpfile(url){
 var c = new ftp();
 return await new Promise((resolve,reject)=>{
-  console.log("and does this one do?")
+  
   c.on('ready', function() {
     console.log("does this execute?")
-    var p=decodeURI(uri(url).path());
+    var p=decodeURIComponent(pa.path);
+    console.log(p)
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
       if (err) throw err;
