@@ -40,7 +40,7 @@ module.exports = async function soFetchProxy(req, res) {
       if (err) throw err;
       console.dir(list);
       function getlast(str){
-        parts=encodeURI(str).split("/")
+        var parts=encodeURI(str).split("/")
         return parts.pop()||parts.pop()
       }
       res.write(`<!DOCTYPE html>
