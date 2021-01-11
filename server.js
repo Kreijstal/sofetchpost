@@ -39,7 +39,7 @@ module.exports = async function soFetchProxy(req, res) {
     c.list(p,function(err, list) {
       if (err) throw err;
       console.dir(list);
-      `<!DOCTYPE html>
+      res.write(`<!DOCTYPE html>
 <html>
 <head>
 	<title>Index of ${p}</title>
@@ -64,7 +64,7 @@ module.exports = async function soFetchProxy(req, res) {
 		</tr>
 		<tr>
 			<td valign="top"><img alt="[PARENTDIR]" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/back.gif"></td>
-			<td><a href="/">Parent Directory</a></td>
+			<td><a href="..">Parent Directory</a></td>
 			<td>&nbsp;</td>
 			<td align="right">-</td>
 			<td>&nbsp;</td>
@@ -72,12 +72,23 @@ module.exports = async function soFetchProxy(req, res) {
       list.map(a=>`		<tr>
 			<td valign="top"><img alt="${a.type=="d"?"[DIR]":"[TXT]"}" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/${a.type=="d"?"folder.gif":"text.gif"}"></td>
 			<td>
-				<a href="${p+encodeURI(a.name)}">${a.name}</a>
+				<a href="${p.substr(1)+encodeURI(a.name)}">${a.name}</a>
 			</td>
-			<td align="right">${a.date}</td>
+			<td align="right">${a.date.toDateString()}</td>
 			<td align="right">${a.size}</td>
 			<td>&nbsp;</td>
-		</tr>`).join('\n')
+		</tr>`).join('\n')+`<tr>
+			<th colspan="5">
+				<hr>
+			</th>
+		</tr>
+	</table>
+	<address>
+		Made with love thanks to glitch.com<!--yeah this was from apache, why do you ask?-->
+	</address>
+</body>
+</html>`)
+      send(res,200)
       c.end();
     });
     }else{
