@@ -94,10 +94,10 @@ return await new Promise((resolve,reject)=>{
 })
 }
 //uri("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/")
-getftpfile("ftp://asamblea.tech/ISIS/N%C3%9C%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
- /* var c = new Client();
+getftpfile("ftp://asamblea.tech/ISIS/N%DC%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
+  var c = new ftp();
   c.on('ready', function() {
-    c.list(function(err, list) {
+    c.list("/ISIS/N%DC Signale und Systeme (Bachelor, WiSe)",function(err, list) {
       if (err) throw err;
       console.dir(list);
       c.end();
@@ -107,7 +107,8 @@ getftpfile("ftp://asamblea.tech/ISIS/N%C3%9C%20Signale%20und%20Systeme%20(Bachel
       stream.once('close', function() { c.end(); });
       (async function(){console.log("hi");const result = await streamToString(stream);console.log(result)})()
       //stream.pipe();
-    });
+    });*/
   });
   
-  c.connect(url.parts);*/
+  c.connect({host:"asamblea.tech"});
+
