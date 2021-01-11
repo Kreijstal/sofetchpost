@@ -14,12 +14,7 @@ const readHistory = function readHistoryFunc(res) {
     send(res, 200, lastFifty);
   });
 }
-var objectMap = (obj, fn) =>
-  Object.fromEntries(
-    Object.entries(obj).map(
-      ([k, v], i) => [k, fn(v, k, i)]
-    )
-  )
+
 function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
 module.exports = async function soFetchProxy(req, res) {
   const url = req.url.slice(1);
