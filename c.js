@@ -1,5 +1,6 @@
 var ftp = require('ftp');
- var uri = require('lil-uri')
+var uriJs = require("uri-js")
+ //var uri = require('lil-uri')
  //var url=uri("ftp://asamblea.tech")
  function streamToString (stream) {
   const chunks = []
@@ -86,12 +87,13 @@ return await new Promise((resolve,reject)=>{
     }
   });
   console.log("before",url)
-  c.connect(uri(url).parts);
+  var pa=uriJs.parse(url)
+  c.connect({host:pa.host,user:pa.userinfo.split(":")[0],password:pa.userinfo.split(":")[1],path:pa.path});
   console.log("after")
 })
 }
 uri("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/")
-getftpfile("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
+getftpfile("ftp://asamblea.tech/ISIS/N%C3%9C%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {

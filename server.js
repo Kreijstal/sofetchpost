@@ -31,7 +31,7 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    if(uri(url).protocol()=="ftp"){
+    if(uri(url).protocol()=="ftp"){//CHANGE
       var c = new ftp();
   c.on('ready', function() {
     var p=decodeURI(uri(url).path());
