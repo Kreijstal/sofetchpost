@@ -72,7 +72,7 @@ module.exports = async function soFetchProxy(req, res) {
       list.map(a=>`		<tr>
 			<td valign="top"><img alt="${a.type=="d"?"[DIR]":"[TXT]"}" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/${a.type=="d"?"folder.gif":"text.gif"}"></td>
 			<td>
-				<a href="${p.substr(1)+encodeURI(a.name)}">${a.name}</a>
+				<a href="${encodeURI(a.name).split("/").pop()+(a.type=="d"?"/":"")}">${a.name}</a>
 			</td>
 			<td align="right">${a.date.toDateString()}</td>
 			<td align="right">${a.size}</td>
