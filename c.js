@@ -11,7 +11,7 @@ var ftp = require('ftp');
 }
 async function getftpfile(url){
 var c = new ftp();
-var file;
+return await new Promise((resolve,reject)=>{
   c.on('ready', function() {
     var p=decodeURI(uri(url).path());
     if(p[p.length-1]=="/"){                
@@ -23,7 +23,7 @@ var file;
         return parts.pop()||parts.pop()
       }
       c.end();
-      file=(`<!DOCTYPE html>
+      resolve(`<!DOCTYPE html>
 <html>
 <head>
 	<title>Index of ${p}</title>
@@ -79,14 +79,15 @@ var file;
      c.get(p, function(err, stream) {
       if (err){throw err};
       stream.once('close', function() { c.end(); });
-      return streamToString(stream)
+      resolve(streamToString(stream))
     });
     }
   });
   
   c.connect(uri(url).parts);
+})
 }
-getftpfile("ftp://asamblea.tech/")
+getftpfile("ftp://ftp.fau.de/apache/README.html").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
