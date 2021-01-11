@@ -12,7 +12,9 @@ var ftp = require('ftp');
 async function getftpfile(url){
 var c = new ftp();
 return await new Promise((resolve,reject)=>{
+  console.log("and does this one do?")
   c.on('ready', function() {
+    console.log("does this execute?")
     var p=decodeURI(uri(url).path());
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
@@ -83,8 +85,9 @@ return await new Promise((resolve,reject)=>{
     });
     }
   });
-  
+  console.log("before")
   c.connect(uri(url).parts);
+  console.log("before")
 })
 }
 getftpfile("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor,%20WiSe)/").then(console.log)
