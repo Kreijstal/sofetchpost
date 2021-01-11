@@ -13,17 +13,17 @@ var Client = require('ftp');
 
   var c = new Client();
   c.on('ready', function() {
-    /*c.list(function(err, list) {
+    c.list(function(err, list) {
       if (err) throw err;
       console.dir(list);
       c.end();
-    });*/
-     c.get('/archivo.txt', function(err, stream) {
+    });
+    /* c.get('/archivo.txt', function(err, stream) {
       if (err) throw err;
       stream.once('close', function() { c.end(); });
       (async function(){console.log("hi");const result = await streamToString(stream);console.log(result)})()
       //stream.pipe();
-    });
+    });*/
   });
   
   c.connect(url.parts);
