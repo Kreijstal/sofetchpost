@@ -2,8 +2,7 @@ const fs = require('fs');
 
 const fetch = require('node-fetch');
 const { send } = require('micro')
-//var uri = require('lil-uri')
-var uriJs = require("uri-js")
+var uri = require('lil-uri')
 const historyFilename = '.data/history.txt'
 var ftp = require('ftp');
 const readHistory = function readHistoryFunc(res) {
@@ -14,7 +13,12 @@ const readHistory = function readHistoryFunc(res) {
     send(res, 200, lastFifty);
   });
 }
-
+var objectMap = (obj, fn) =>
+  Object.fromEntries(
+    Object.entries(obj).map(
+      ([k, v], i) => [k, fn(v, k, i)]
+    )
+  )
 function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
 module.exports = async function soFetchProxy(req, res) {
   const url = req.url.slice(1);
@@ -27,16 +31,16 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    if(pa.scheme=="ftp"){//CHANGE
+    if(uri(url).protocol()=="ftp"){
       var c = new ftp();
   c.on('ready', function() {
-    var p=decodeURIComponent(pa.path);
+    var p=decodeURI(uri(url).path());
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
       if (err) throw err;
       console.dir(list);
       function getlast(str){
-        var parts=encodeURIComponent(str).split("/")
+        var parts=encodeURI(str).split("/")
         return parts.pop()||parts.pop()
       }
       res.write(`<!DOCTYPE html>
@@ -93,15 +97,14 @@ module.exports = async function soFetchProxy(req, res) {
     });
     }else{
      c.get(p, function(err, stream) {
-      if (err){console.log(decodeURIComponent(pa.path),"did you really just error on me?"); throw err};
+      if (err){console.log(decodeURI(uri(url).path()),"did you really just error on me?"); throw err};
       stream.once('close', function() { c.end(); });
       stream.pipe(res);
     });
     }
   });
-  var pa=uriJs.parse(url)
-  //c.connect(uri(url).parts);
-  c.connect({...pa,"user":pa.userinfo?.split(':')[0],"password":pa.userinfo?.split(':')[1]})
+  
+  c.connect(uri(url).parts);
       
     }
     else{

@@ -1,6 +1,5 @@
 var ftp = require('ftp');
-var uriJs = require("uri-js")
- //var uri = require('lil-uri')
+ var uri = require('lil-uri')
  //var url=uri("ftp://asamblea.tech")
  function streamToString (stream) {
   const chunks = []
@@ -13,17 +12,14 @@ var uriJs = require("uri-js")
 async function getftpfile(url){
 var c = new ftp();
 return await new Promise((resolve,reject)=>{
-  
   c.on('ready', function() {
-    console.log("does this execute?")
-    var p=decodeURIComponent(pa.path);
-    console.log(p)
+    var p=decodeURI(uri(url).path());
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
       if (err) throw err;
       //console.dir(list);
       function getlast(str){
-        var parts=encodeURIComponent((str)).split("/")
+        var parts=encodeURI(str).split("/")
         return parts.pop()||parts.pop()
       }
       c.end();
@@ -87,17 +83,14 @@ return await new Promise((resolve,reject)=>{
     });
     }
   });
-  console.log("before",url)
-  var pa=uriJs.parse(url)
-  c.connect({...pa,"user":pa.userinfo?.split(':')[0],"password":pa.userinfo?.split(':')[1]});
-  console.log("after")
+  
+  c.connect(uri(url).parts);
 })
 }
-//uri("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/")
-getftpfile("ftp://asamblea.tech/ISIS/N%DC%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
-  var c = new ftp();
+getftpfile("ftp://ftp.fau.de/apache/README.html").then(console.log)
+ /* var c = new Client();
   c.on('ready', function() {
-    c.list("/ISIS/N\xDC Signale und Systeme (Bachelor, WiSe)/",function(err, list) {
+    c.list(function(err, list) {
       if (err) throw err;
       console.dir(list);
       c.end();
@@ -107,8 +100,7 @@ getftpfile("ftp://asamblea.tech/ISIS/N%DC%20Signale%20und%20Systeme%20(Bachelor%
       stream.once('close', function() { c.end(); });
       (async function(){console.log("hi");const result = await streamToString(stream);console.log(result)})()
       //stream.pipe();
-    });*/
+    });
   });
   
-  c.connect({host:"asamblea.tech"});
-
+  c.connect(url.parts);*/
