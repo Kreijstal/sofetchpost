@@ -39,6 +39,10 @@ module.exports = async function soFetchProxy(req, res) {
     c.list(p,function(err, list) {
       if (err) throw err;
       console.dir(list);
+      function getlast(str){
+        parts=encodeURI(str).split("/")
+        return parts.pop()||parts.pop()
+      }
       res.write(`<!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +76,7 @@ module.exports = async function soFetchProxy(req, res) {
       list.map(a=>`		<tr>
 			<td valign="top"><img alt="${a.type=="d"?"[DIR]":"[TXT]"}" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/${a.type=="d"?"folder.gif":"text.gif"}"></td>
 			<td>
-				<a href="${encodeURI(a.name).split("/").pop()+(a.type=="d"?"/":"")}">${a.name}</a>
+				<a href="${getlast(encodeURI(a.name))+(a.type=="d"?"/":"")}">${a.name}</a>
 			</td>
 			<td align="right">${a.date.toDateString()}</td>
 			<td align="right">${a.size}</td>
