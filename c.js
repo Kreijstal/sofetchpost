@@ -92,7 +92,7 @@ return await new Promise((resolve,reject)=>{
   console.log("after")
 })
 }
-uri("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/")
+//uri("ftp://asamblea.tech/ISIS/NÜ%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/")
 getftpfile("ftp://asamblea.tech/ISIS/N%C3%9C%20Signale%20und%20Systeme%20(Bachelor%2C%20WiSe)/").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
