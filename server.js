@@ -2,7 +2,8 @@ const fs = require('fs');
 
 const fetch = require('node-fetch');
 const { send } = require('micro')
-var uri = require('lil-uri')
+//var uri = require('lil-uri')
+var uriJs = require("uri-js")
 const historyFilename = '.data/history.txt'
 var ftp = require('ftp');
 const readHistory = function readHistoryFunc(res) {
@@ -31,7 +32,7 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    if(uri(url).protocol()=="ftp"){//CHANGE
+    if(pa.scheme=="ftp"){//CHANGE
       var c = new ftp();
   c.on('ready', function() {
     var p=decodeURI(uri(url).path());
