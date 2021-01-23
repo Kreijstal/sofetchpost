@@ -107,7 +107,7 @@ return await new Promise((resolve,reject)=>{
 
 var c = new (require("ftp"));
   c.on('ready', function() {
-    c.list("ä",function(err, list) {
+    c.list("\xe4",function(err, list) {
       if (err) throw err;
 /* Uncaught Error: The system cannot find the file specified.
     at makeError (C:\node_modules\ftp\lib\connection.js:1067:13) {
