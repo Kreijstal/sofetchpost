@@ -87,7 +87,7 @@ return await new Promise((resolve,reject)=>{
   c.connect(uri(url).parts);
 })
 }
-getftpfile("ftp://ftp.fau.de/apache/README.html").then(console.log)
+//getftpfile("ftp://asamblea.tech/\xe4").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
@@ -104,3 +104,15 @@ getftpfile("ftp://ftp.fau.de/apache/README.html").then(console.log)
   });
   
   c.connect(url.parts);*/
+
+var c = new (require("ftp"));
+  c.on('ready', function() {
+    c.list("ä",function(err, list) {
+      if (err) throw err;
+/* Uncaught Error: The system cannot find the file specified.
+    at makeError (C:\node_modules\ftp\lib\connection.js:1067:13) {
+  code: 550
+*/
+    });
+  });
+  c.connect({host:"asamblea.tech"});
