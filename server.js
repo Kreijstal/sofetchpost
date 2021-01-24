@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const { send } = require('micro')
 var uri = require('lil-uri')
 const historyFilename = '.data/history.txt'
-var ftp = require('ftp');
+var ftp = require('@icetee/ftp');
 const readHistory = function readHistoryFunc(res) {
   fs.readFile(historyFilename, 'utf8', (err, history) => {
     if (err) send(res, 500);

@@ -1,4 +1,4 @@
-var ftp = require('ftp');
+var ftp = require('@icetee/ftp');
  var uri = require('lil-uri')
  //var url=uri("ftp://asamblea.tech")
  function streamToString (stream) {
@@ -87,7 +87,7 @@ return await new Promise((resolve,reject)=>{
   c.connect(uri(url).parts);
 })
 }
-//getftpfile("ftp://asamblea.tech/\xe4").then(console.log)
+getftpfile("ftp://asamblea.tech/\xe4").then(console.log)
  /* var c = new Client();
   c.on('ready', function() {
     c.list(function(err, list) {
@@ -105,14 +105,3 @@ return await new Promise((resolve,reject)=>{
   
   c.connect(url.parts);*/
 
-var c = new (require("ftp"));
-  c.on('ready', function() {
-    c.list("\xe4",function(err, list) {
-      if (err) throw err;
-/* Uncaught Error: The system cannot find the file specified.
-    at makeError (C:\node_modules\ftp\lib\connection.js:1067:13) {
-  code: 550
-*/
-    });
-  });
-  c.connect({host:"asamblea.tech"});
