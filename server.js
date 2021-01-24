@@ -22,15 +22,17 @@ const readHistory = function readHistoryFunc(res) {
 function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
 module.exports = async function soFetchProxy(req, res) {
   var url = req.url.slice(1);
-  
+  var decompress=false;
   if (url.length === 0) return readHistory(res);
   console.log(req.url)
   console.log(JSON.stringify(req.headers))
   //res.write(JSON.stringify(req.method))
   //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
   if(url?.split('/')[0]=="decomp"){
-    url=(a=>{a.shift();return a.join('/')})(url.split('/'));
-    console.log(url)
+    let a=url.split('/');
+    a.shift();
+    url=a;
+    decompress=true;
   }
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
