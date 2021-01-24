@@ -1,6 +1,6 @@
 var ftp = require('@icetee/ftp');
  var uri = require('lil-uri')
- var uriJs = require("uri-js")
+ //var uriJs = require("uri-js")
  //var url=uri("ftp://asamblea.tech")
  function streamToString (stream) {
   const chunks = []
