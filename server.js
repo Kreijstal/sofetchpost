@@ -20,9 +20,10 @@ const readHistory = function readHistoryFunc(res) {
     )
   )*/
 //returns a string, or a stream
-async function execurl(url){
-  return new Promise((resolve,reject)=>{
+async function execurl(url,req){
+  
 if(uri(url).protocol()=="ftp"){
+  return new Promise((resolve,reject)=>{
       var c = new ftp();
     
   c.on('ready', function() {
@@ -30,13 +31,13 @@ if(uri(url).protocol()=="ftp"){
     if(p[p.length-1]=="/"){                
     c.list(p,function(err, list) {
       if (err) throw err;
-      console.dir(list);
+      //console.dir(list);
       function getlast(str){
         var parts=encodeURI(str).split("/")
         return parts.pop()||parts.pop()
       }
       c.end();
-      return `<!DOCTYPE html>
+      resolve( `<!DOCTYPE html>
 <html>
 <head>
 	<title>Index of ${p}</title>
@@ -84,7 +85,7 @@ if(uri(url).protocol()=="ftp"){
 		Made with love thanks to glitch.com<!--yeah this was from apache, why do you ask?-->
 	</address>
 </body>
-</html>`
+</html>`)
       //send(res,200)
       
     });
@@ -99,13 +100,14 @@ if(uri(url).protocol()=="ftp"){
   
   c.connect(uri(url).parts);
       
-    }
+    })
+}
     else{
     const data = await fetch(url,{method:req.method,headers:filob(req.headers,["host","referer"]),redirect:"follow",body:req.body});
     
-    data.body.pipe(res);
+    return data.body;
     }
-})
+
   
   
   
@@ -128,7 +130,10 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    await execurl(url);
+    var r=await execurl(url,req);
+    console.log(r);
+    res.write(r)
+    send(res,200);
     
   } catch (err) {
     console.log(err)
