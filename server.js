@@ -128,12 +128,15 @@ module.exports = async function soFetchProxy(req, res) {
     decompress=true;
   }
   try {
+    res.setHeader("Content-Security-Policy",`default-src *  data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval' 'unsafe-dynamic'; script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src * data: blob: 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src * data: blob: ; style-src * data: blob: 'unsafe-inline';font-src * data: blob: 'unsafe-inline';`);
     res.setHeader('Access-Control-Allow-Origin', '*');
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
     var r=await execurl(url,req);
-    console.log(r);
-    res.write(r)
+    if(r.pipe){r.pipe(res)}else{
+          res.write(r);
     send(res,200);
+    }
+
     
   } catch (err) {
     console.log(err)
