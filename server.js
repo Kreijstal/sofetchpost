@@ -19,25 +19,9 @@ const readHistory = function readHistoryFunc(res) {
       ([k, v], i) => [k, fn(v, k, i)]
     )
   )*/
-function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
-module.exports = async function soFetchProxy(req, res) {
-  var url = req.url.slice(1);
-  var decompress=false;
-  if (url.length === 0) return readHistory(res);
-  console.log(req.url)
-  console.log(JSON.stringify(req.headers))
-  //res.write(JSON.stringify(req.method))
-  //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
-  if(url?.split('/')[0]=="decomp"){
-    let a=url.split('/');
-    a.shift();
-    url=a;
-    decompress=true;
-  }
-  try {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    if(uri(url).protocol()=="ftp"){
+//returns a string, or a stream
+function execurl(url){
+  if(uri(url).protocol()=="ftp"){
       var c = new ftp();
   c.on('ready', function() {
     var p=decodeURI(uri(url).path());
@@ -49,7 +33,8 @@ module.exports = async function soFetchProxy(req, res) {
         var parts=encodeURI(str).split("/")
         return parts.pop()||parts.pop()
       }
-      res.write(`<!DOCTYPE html>
+      c.end();
+      return `<!DOCTYPE html>
 <html>
 <head>
 	<title>Index of ${p}</title>
@@ -97,15 +82,15 @@ module.exports = async function soFetchProxy(req, res) {
 		Made with love thanks to glitch.com<!--yeah this was from apache, why do you ask?-->
 	</address>
 </body>
-</html>`)
-      send(res,200)
-      c.end();
+</html>`
+      //send(res,200)
+      
     });
     }else{
      c.get(p, function(err, stream) {
       if (err){console.log(decodeURI(uri(url).path()),"did you really just error on me?"); throw err};
       stream.once('close', function() { c.end(); });
-      stream.pipe(res);
+      return stream;
     });
     }
   });
@@ -118,6 +103,28 @@ module.exports = async function soFetchProxy(req, res) {
     
     data.body.pipe(res);
     }
+  
+  
+}
+function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
+module.exports = async function soFetchProxy(req, res) {
+  var url = req.url.slice(1);
+  var decompress=false;
+  if (url.length === 0) return readHistory(res);
+  console.log(req.url)
+  console.log(JSON.stringify(req.headers))
+  //res.write(JSON.stringify(req.method))
+  //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
+  if(url?.split('/')[0]=="decomp"){
+    let a=url.split('/');
+    a.shift();
+    url=a;
+    decompress=true;
+  }
+  try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
+    
     
   } catch (err) {
     console.log(err)
