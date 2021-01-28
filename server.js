@@ -93,7 +93,7 @@ if(uri(url).protocol()=="ftp"){
      c.get(p, function(err, stream) {
       if (err){console.log(decodeURI(uri(url).path()),"did you really just error on me?"); throw err};
       stream.once('close', function() { c.end(); });
-      return stream;
+      resolve(stream);
     });
     }
   });
@@ -123,7 +123,7 @@ module.exports = async function soFetchProxy(req, res) {
   //res.write(JSON.stringify(Object.getOwnPropertyNames(req.headers)))
   if(url?.split('/')[0]=="decomp"){
     let a=url.split('/');
-    a.shift();
+     a.shift();
     url=a;
     decompress=true;
   }
