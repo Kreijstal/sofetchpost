@@ -20,9 +20,11 @@ const readHistory = function readHistoryFunc(res) {
     )
   )*/
 //returns a string, or a stream
-function execurl(url){
-  if(uri(url).protocol()=="ftp"){
+async function execurl(url){
+  return new Promise((resolve,reject)=>{
+if(uri(url).protocol()=="ftp"){
       var c = new ftp();
+    
   c.on('ready', function() {
     var p=decodeURI(uri(url).path());
     if(p[p.length-1]=="/"){                
@@ -103,6 +105,8 @@ function execurl(url){
     
     data.body.pipe(res);
     }
+})
+  
   
   
 }
@@ -124,7 +128,7 @@ module.exports = async function soFetchProxy(req, res) {
   try {
     res.setHeader('Access-Control-Allow-Origin', '*');
     fs.appendFile(historyFilename, `${new Date()} 🚋 ${url}\n`, () => {}); // empty callback 🤷‍♀️
-    
+    await execurl(url);
     
   } catch (err) {
     console.log(err)
