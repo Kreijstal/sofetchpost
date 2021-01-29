@@ -98,8 +98,20 @@ if(uri(url).protocol()=="ftp"){
   
 }
 function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
-
+var stream;
 (async ()=>{
-  var stream=await execurl("ftp://asamblea.tech/ISIS/Elektrische%20Energiesysteme%20WiSe%202021/Musterklausur/Musterklausur.zip",{})
-  console.log(stream)
+  stream=await execurl("ftp://asamblea.tech/ISIS/Elektrische%20Energiesysteme%20WiSe%202021/Musterklausur/Musterklausur.zip",{})
+  //console.log(stream)
+  var uz=require("unzip-stream")
+stream.pipe(uz.Parse()).on('entry', function (entry) {
+    var filePath = entry.path;
+    var type = entry.type; // 'Directory' or 'File'
+    var size = entry.size; // might be undefined in some archives
+   // if (filePath === "this IS the file I'm looking for") {
+  //    entry.pipe(fs.createWriteStream('output/path'));
+  //  } else {
+  console.log(filePath,type,size)
+      entry.autodrain();
+    
+  });
 })()
