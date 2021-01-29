@@ -5,24 +5,9 @@ const { send } = require('micro')
 var uri = require('lil-uri')
 const historyFilename = '.data/history.txt'
 var ftp = require('@icetee/ftp');
-async function execurl(url,req){
-  
-if(uri(url).protocol()=="ftp"){
-  return new Promise((resolve,reject)=>{
-      var c = new ftp();
-    
-  c.on('ready', function() {
-    var p=decodeURI(uri(url).path());
-    if(p[p.length-1]=="/"){                
-    c.list(p,function(err, list) {
-      if (err) throw err;
-      //console.dir(list);
-      function getlast(str){
-        var parts=encodeURI(str).split("/")
-        return parts.pop()||parts.pop()
-      }
-      c.end();
-      resolve( `<!DOCTYPE html>
+function listindexer(title,files){
+  //files ist eine Array der form [{type:"d",name:"owo.gif",date:Date,size:int}]
+  return `<!DOCTYPE html>
 <html>
 <head>
 	<title>Index of ${p}</title>
@@ -52,12 +37,12 @@ if(uri(url).protocol()=="ftp"){
 			<td align="right">-</td>
 			<td>&nbsp;</td>
 		</tr>`+
-      list.map(a=>`		<tr>
+      files.map(a=>`		<tr>
 			<td valign="top"><img alt="${a.type=="d"?"[DIR]":"[TXT]"}" src="https://sofetchpost.glitch.me/http://www.xray.mpe.mpg.de/icons/apache/${a.type=="d"?"folder.gif":"text.gif"}"></td>
 			<td>
-				<a href="${getlast(a.name)+(a.type=="d"?"/":"")}">${a.name}</a>
+				<a href="${a.name+(a.type=="d"?"/":"")}">${a.name}</a>
 			</td>
-			<td align="right">${a.date.toDateString()}</td>
+			<td align="right">${a.date?.toDateString()}</td>
 			<td align="right">${a.size}</td>
 			<td>&nbsp;</td>
 		</tr>`).join('\n')+`<tr>
@@ -70,7 +55,27 @@ if(uri(url).protocol()=="ftp"){
 		Made with love thanks to glitch.com<!--yeah this was from apache, why do you ask?-->
 	</address>
 </body>
-</html>`)
+</html>`
+  
+}
+async function execurl(url,req){
+  
+if(uri(url).protocol()=="ftp"){
+  return new Promise((resolve,reject)=>{
+      var c = new ftp();
+    
+  c.on('ready', function() {
+    var p=decodeURI(uri(url).path());
+    if(p[p.length-1]=="/"){                
+    c.list(p,function(err, list) {
+      if (err) throw err;
+      //console.dir(list);
+      function getlast(str){
+        var parts=encodeURI(str).split("/")
+        return parts.pop()||parts.pop()
+      }
+      c.end();
+      resolve( )
       //send(res,200)
       
     });
