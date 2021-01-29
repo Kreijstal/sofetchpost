@@ -100,6 +100,6 @@ if(uri(url).protocol()=="ftp"){
 function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
 
 (async ()=>{
-  await execurl("")
-  
+  var stream=await execurl("ftp://asamblea.tech/ISIS/Elektrische%20Energiesysteme%20WiSe%202021/Musterklausur/Musterklausur.zip",{})
+  console.log(stream)
 })()
