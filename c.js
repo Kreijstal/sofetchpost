@@ -107,10 +107,11 @@ function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((o
 var stream;
 (async ()=>{
   stream=await execurl("https://github.com/Kreijstal/dotfiles/archive/master.zip",{});
-  stream.pipe(new (require('minizlib')).BrotliDecompress())
+ // stream.pipe(new (require('minizlib')).BrotliDecompress())
 
   //console.log(stream)
-/*  var uz=require("unzip-stream")
+  var uz=require("unzip-stream")
+  var filearr=[]
 stream.pipe(uz.Parse()).on('entry', function (entry) {
     var filePath = entry.path;
     var type = entry.type; // 'Directory' or 'File'
@@ -118,8 +119,9 @@ stream.pipe(uz.Parse()).on('entry', function (entry) {
    // if (filePath === "this IS the file I'm looking for") {
   //    entry.pipe(fs.createWriteStream('output/path'));
   //  } else {
+  filearr.push({type:"d",name:"owo.gif",date:Date,size:int})
   console.log(filePath,type,size)
       entry.autodrain();
     
-  });*/
+  });
 })()
