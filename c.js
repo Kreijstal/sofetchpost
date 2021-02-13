@@ -7,6 +7,7 @@ const historyFilename = '.data/history.txt'
 var ftp = require('@icetee/ftp');
 function listindexer(title,files){
   //files ist eine Array der form [{type:"d",name:"owo.gif",date:Date,size:int}]
+  var p=title
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -105,9 +106,11 @@ if(uri(url).protocol()=="ftp"){
 function filob(ob,f){ return Object.keys(ob).filter(a=>!f.includes(a)).reduce((obj, key) => { obj[key] = ob[key];    return obj;  }, {}) }
 var stream;
 (async ()=>{
-  stream=await execurl("ftp://asamblea.tech/ISIS/Elektrische%20Energiesysteme%20WiSe%202021/Musterklausur/Musterklausur.zip",{})
+  stream=await execurl("https://github.com/Kreijstal/dotfiles/archive/master.zip",{});
+  stream.pipe(new (require('minizlib')).BrotliDecompress())
+
   //console.log(stream)
-  var uz=require("unzip-stream")
+/*  var uz=require("unzip-stream")
 stream.pipe(uz.Parse()).on('entry', function (entry) {
     var filePath = entry.path;
     var type = entry.type; // 'Directory' or 'File'
@@ -118,5 +121,5 @@ stream.pipe(uz.Parse()).on('entry', function (entry) {
   console.log(filePath,type,size)
       entry.autodrain();
     
-  });
+  });*/
 })()
