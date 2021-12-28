@@ -5,6 +5,7 @@ const { send } = require('micro')
 var uri = require('lil-uri')
 const historyFilename = '.data/history.txt'
 var ftp = require('@icetee/ftp');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const readHistory = function readHistoryFunc(res) {
   fs.readFile(historyFilename, 'utf8', (err, history) => {
     if (err) send(res, 500);
