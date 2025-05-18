@@ -15,7 +15,7 @@
     "@icetee/ftp": "https://github.com/kreijstal-contributions/node-ftp.git",
     "lil-uri": "https://github.com/kreijstal-contributions/uri.git",
     "micro": "^10.0.0",
-    "minizlib": "^2.1.2",
+    "minizlib": "^3.0.0",
     "node-fetch": "^3.0.0",
     "unzip-stream": "^0.3.1"
   },
